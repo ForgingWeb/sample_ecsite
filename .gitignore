@@ -1,12 +1,13 @@
 .DS_Store
+.editorconfig
 
-application/cache/*
-!application/cache/index.html
+shop_app_system/application/cache/*
+!shop_app_system/aapplication/cache/index.html
 
-application/logs/*
-!application/logs/index.html
+shop_app_system/aapplication/logs/*
+!shop_app_system/aapplication/logs/index.html
 
-!application/*/.htaccess
+!shop_app_system/aapplication/*/.htaccess
 
 composer.lock
 
