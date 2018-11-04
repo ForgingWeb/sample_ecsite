@@ -1,6 +1,6 @@
 # sample_ecsite
 
-sample_ecsiteは、私が制作するPHPサイトのサンプルとして制作しています。
+sample_ecsiteは、私が制作するPHPサイトのサンプルとして制作しています。<br>
 applicationとsystemは、shop_app_systemに格納しています。
 
 sample_ecsiteは、現在制作中です。
