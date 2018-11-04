@@ -9,10 +9,10 @@ sample_ecsiteは、現在制作中です。
 
 フリーのHTMLテンプレートをPHPのフレームワークCodeIgniterに、配置し、Mysqlと連携をして動的な機能・管理機能の実装をしています。
 
-▽デザインHTMLテンプレートURL
+▽デザインHTMLテンプレートURL<br>
 https://keenthemes.com/free-bootstrap-templates/fully-responsive-bootstrap-based-ecommerce-frontend-theme/
 ※サンプルECサイトの実装にあたり、実際の動作にあわせて、テンプレートの修正・変更をしています。
 
-▽CMSのHTMLテンプレート
+▽CMSのHTMLテンプレート<br>
 https://www.npmjs.com/package/tabler-ui
 
