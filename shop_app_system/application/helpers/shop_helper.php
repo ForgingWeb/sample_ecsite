@@ -501,10 +501,8 @@ EOM;
 
         <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
 
-        <!-- BEGIN CART -->
-        <div class="top-cart-block">
-
-
+    <div class="header_right">
+        <div class="account_check">
         <!-- BEGIN Login -->
         <span>
         <a href="{$this_shop_url}shop_account/">My Account</a> | 
@@ -512,15 +510,19 @@ EOM;
         </span>　
         <!-- END Login -->
 
-          <div class="top-cart-info">
-          
-
-        <span>
-            <a href="javascript:void(0);" class="top-cart-info-count">3 items</a>
-            <a href="javascript:void(0);" class="top-cart-info-value">$1260</a>
-        </span>
-
+          <!-- div class="top-cart-info">
+            <span>
+                <a href="javascript:void(0);" class="top-cart-info-count">3 items</a>
+                <a href="javascript:void(0);" class="top-cart-info-value">$1260</a>
+            </span>
+          </div -->
           </div>
+
+        <!-- BEGIN CART -->
+        <div class="top-cart-block">
+
+
+
           <i class="fa fa-shopping-cart"></i>
                         
           <div class="top-cart-content-wrapper">
@@ -591,6 +593,8 @@ EOM;
           </div>            
         </div>
         <!--END CART -->
+
+        </div>
 
         <!-- BEGIN NAVIGATION -->
         <div class="header-navigation">
