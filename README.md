@@ -1,5 +1,4 @@
 # sample_ecsite
-php CodeIgniter
 
 sample_ecsiteは、私が制作するPHPサイトのサンプルとして制作しています。
 
