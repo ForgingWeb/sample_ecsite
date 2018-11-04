@@ -271,7 +271,7 @@
     </div>
 
     <!-- BEGIN BRANDS -->
-    <div class="brands">
+    <!-- div class="brands">
       <div class="container">
             <div class="owl-carousel owl-carousel6-brands">
               <a href="shop_product_list"><img src="/CI_shop/shop_assets/pages/img/brands/canon.jpg" alt="canon" title="canon"></a>
@@ -288,7 +288,7 @@
               <a href="shop_product_list"><img src="/CI_shop/shop_assets/pages/img/brands/zara.jpg" alt="zara" title="zara"></a>
             </div>
         </div>
-    </div>
+    </div -->
     <!-- END BRANDS -->
 
     <!-- BEGIN STEPS -->

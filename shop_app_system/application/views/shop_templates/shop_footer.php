@@ -155,6 +155,8 @@ if(in_array($this_page,$pagearr)) :
     print $page_js; 
     ?>
 <script>
+  var ua = navigator.userAgent;
+if( ua.indexOf('iPhone') > 0 || ua.indexOf('iPod') > 0 || (ua.indexOf('Android') > 0 && ua.indexOf('Mobile') > 0) || ( ua.indexOf('windows') > 0 && ua.indexOf('phone') > 0) || ( ua.indexOf('firefox') > 0 && ua.indexOf('mobile') > 0) ) {
   $(function() {
           $(window).on( 'scroll', function () {
             //スクロール位置を取得
@@ -167,6 +169,8 @@ if(in_array($this_page,$pagearr)) :
             }
           });
           });
+        }
+
 </script>
 
     <!-- END PAGE LEVEL JAVASCRIPTS -->
