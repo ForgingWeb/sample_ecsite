@@ -1,0 +1,67 @@
+h1.card-title{
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin: 1rem 0 0.2rem 1rem;
+}
+.shop_manage_login .my-3.my-md-5{
+    width: 30rem;
+    margin: 0 auto;
+}
+.custom-file-input:lang(ja) ~ .custom-file-label::after {
+    content: "選択";
+}
+
+.card-header:nth-child(n+2) {
+    border-top: 1px solid rgba(0, 40, 100, 0.12);
+}
+.card-body:nth-child(n+2) {
+    padding-top: 1rem;
+}
+.form-control.line {
+    display: inline-block;
+}
+.form-control.name {
+    width:40em;
+}
+.input-group.yen {
+    width:20em;
+}
+span.ymk{
+    display: inline-block;
+    width: 2rem;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #495057;
+    background-color: #fff;
+}
+.attention,
+.custom-control-label{
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+.input-group-text.size{
+    width:2.5rem;
+}
+.sizes{
+    display:inline-block;
+    width:2rem;
+}
+.invalid-feedback{
+    display:block;
+}
+
+#hidden_form{
+    display:none;
+}
+@media screen and (max-width:900px){
+    .shop_manage_login .my-3.my-md-5{
+        width:auto;
+    }
+    .form-control.name {
+        width:100%;
+    }
+    .input-group.yen {
+        width:100%;
+    }
+}
