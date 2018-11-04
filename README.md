@@ -1,13 +1,13 @@
 # sample_ecsite
 
-sample_ecsiteは、私が制作するPHPサイトのサンプルとして制作しています。<br>
+「sample_ecsite」は、私が制作するPHPサイトのサンプルとして制作しています。<br>
 applicationとsystemは、shop_app_systemに格納しています。
 
-sample_ecsiteは、現在制作中です。
+「sample_ecsite」は、現在制作中で随時更新します。
 
-商品の登録機能実装後に、AWSにアップロードしてこちらにURLを記載します。
+近日中に、AWSに実装し、URLをこちらに記載する予定です。
 
-フリーのHTMLテンプレートをPHPのフレームワークCodeIgniterに、配置し、Mysqlと連携をして動的な機能・管理機能の実装をしています。
+PHPのフレームワークCodeIgniterでHTMLテンプレートを使用し、Mysqlと連携をして動的な機能・管理機能の実装をしています。
 
 ▽デザインHTMLテンプレートURL<br>
 https://keenthemes.com/free-bootstrap-templates/fully-responsive-bootstrap-based-ecommerce-frontend-theme/<br>
