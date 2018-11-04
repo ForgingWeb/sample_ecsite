@@ -7,7 +7,7 @@ sample_ecsiteは、現在制作中です。
 
 商品の登録機能実装後に、AWSにアップロードしてこちらにURLを記載します。
 
-フリーのHTMLテンプレートをPHPのフレームワークcordigniterに、配置し、Mysqlと連携をして動的な機能・管理機能の実装をしています。
+フリーのHTMLテンプレートをPHPのフレームワークCodeIgniterに、配置し、Mysqlと連携をして動的な機能・管理機能の実装をしています。
 
 ▽デザインHTMLテンプレートURL
 https://keenthemes.com/free-bootstrap-templates/fully-responsive-bootstrap-based-ecommerce-frontend-theme/
