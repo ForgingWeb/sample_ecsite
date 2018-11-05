@@ -16,9 +16,9 @@ class Shop_manage extends CI_Controller {
     {
         parent::__construct();
         //モデル・ヘルパー・プラグイン等の読み込み
-        $this->load->helper(array('form', 'url','shop','shopmng','html'));
+        $this->load->helper(array('form', 'url','shop','shopmng','html','string'));
         $this->load->database(); 
-        $this->load->library(array('shop_manage_lib',"image_lib"));
+        $this->load->library(array('shop_manage_lib',"image_lib",'session'));
         $this->load->model(array('shop_model'));
         //変数初期化
         $this->description="";
@@ -397,7 +397,15 @@ class Shop_manage extends CI_Controller {
 
     public function smg_product_exe(){
         /*商品登録確認画面実行*/
-        foreach($_POST as $idx => $val){echo "$idx = $val<br>";}
+        var_dump($this->input->post() );
+        /*
+        foreach($this->input->post() as $idx => $val){
+            if($val != null)
+            {
+            echo "$idx = $val<br>";
+            }
+        }
+        */
     
     }
 
@@ -443,6 +451,34 @@ class Shop_manage extends CI_Controller {
         {
 
         }else{
+            $str_org =  $this->input->post("str_org");
+            $str_input = $this->input->post("str_input");
+            if($str_input == null)
+            {
+            //postでログイン情報をうけとっていなければセッションを確認する
+                if($this->session->userdata('str_input') == null){
+                    http_response_code( 301 ) ;
+                    header( "Location: /CI_shop/shop_manage/shop_manage_login/" ) ;
+                    exit ;
+                }
+            }else{
+            //postでログイン情報をうけとっていればセッションをセットする
+                if($str_org == $str_input)
+                {
+                    $newdata = array(
+                        'str_input'  => $str_input
+                    );
+                    $this->session->set_userdata($newdata);
+                }
+                else
+                {
+                    http_response_code( 301 ) ;
+                    header( "Location: /CI_shop/shop_manage/shop_manage_login/" ) ;
+                    exit ;
+
+                }
+
+            }
 
         }
     }

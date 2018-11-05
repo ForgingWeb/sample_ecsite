@@ -292,7 +292,7 @@
     <!-- END BRANDS -->
 
     <!-- BEGIN STEPS -->
-    <div class="steps-block steps-block-red">
+    <!-- div class="steps-block steps-block-red">
       <div class="container">
         <div class="row">
           <div class="col-md-4 steps-block-col">
@@ -320,5 +320,5 @@
           </div>
         </div>
       </div>
-    </div>
+    </div -->
     <!-- END STEPS -->

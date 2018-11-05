@@ -9,16 +9,16 @@ shim: {
 'core': ['bootstrap', 'jquery'],
 },
 paths: {
-'core': '/CI/shop_manage_assets/js/core',
-'jquery': '/CI/shop_manage_assets/js/vendors/jquery-3.2.1.min',
-'bootstrap': '/CI/shop_manage_assets/js/vendors/bootstrap.bundle.min',
-'sparkline': '/CI/shop_manage_assets/js/vendors/jquery.sparkline.min',
-'selectize': '/CI/shop_manage_assets/js/vendors/selectize.min',
-'tablesorter': '/CI/shop_manage_assets/js/vendors/jquery.tablesorter.min',
-'vector-map': '/CI/shop_manage_assets/js/vendors/jquery-jvectormap-2.0.3.min',
-'vector-map-de': '/CI/shop_manage_assets/js/vendors/jquery-jvectormap-de-merc',
-'vector-map-world': '/CI/shop_manage_assets/js/vendors/jquery-jvectormap-world-mill',
-'circle-progress': '/CI/shop_manage_assets/js/vendors/circle-progress.min',
+'core': '/CI_shop/shop_manage_assets/js/core',
+'jquery': '/CI_shop/shop_manage_assets/js/vendors/jquery-3.2.1.min',
+'bootstrap': '/CI_shop/shop_manage_assets/js/vendors/bootstrap.bundle.min',
+'sparkline': '/CI_shop/shop_manage_assets/js/vendors/jquery.sparkline.min',
+'selectize': '/CI_shop/shop_manage_assets/js/vendors/selectize.min',
+'tablesorter': '/CI_shop/shop_manage_assets/js/vendors/jquery.tablesorter.min',
+'vector-map': '/CI_shop/shop_manage_assets/js/vendors/jquery-jvectormap-2.0.3.min',
+'vector-map-de': '/CI_shop/shop_manage_assets/js/vendors/jquery-jvectormap-de-merc',
+'vector-map-world': '/CI_shop/shop_manage_assets/js/vendors/jquery-jvectormap-world-mill',
+'circle-progress': '/CI_shop/shop_manage_assets/js/vendors/circle-progress.min',
 }
 });
 window.tabler = {
