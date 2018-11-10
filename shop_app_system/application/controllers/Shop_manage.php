@@ -506,6 +506,7 @@ class Shop_manage extends CI_Controller {
 
         /*全商品の数取得    */
         $table = "products";
+        $table_stocks = "products_stocks";
         $link["clamn"] = "delete_flag";
         $link["val"] = null;
         $product_cnt = $this->shop_model->get_count_all($table,$like);
@@ -537,25 +538,19 @@ class Shop_manage extends CI_Controller {
         echo $this->pagination->create_links();
 
         //ページ単位の情報を取得
-		$this->db->select("id,name,id_color_main,listprice");
+        $this->db->select("id,name,id_color_main,listprice");
         $this->db->limit($limit,$num );//limit
         $query = $this->db->get($table);
         
-        $colornum = $this->colornum;//選択できる色数
-        $sizenum = $this->sizenum;//選択できるサイズ数
+        //$colornum = $this->colornum;//選択できる色数
+        //$sizenum = $this->sizenum;//選択できるサイズ数
 
-        foreach ($query->result_array() as $row){
-			$products_data["id"] = $row["id"];
-			$products_data["name"] = $row["name"];
-            $products_data["id_color_main"] = $row["id_color_main"];
-            for ($i=0; $i < $colornum; $i++) {
-            //色別の情報を取得
-                for ($i=0; $i < $sizenum; $i++) { 
-                    # サイズ別の在庫数を取得
-                }
-            }
+        //DBから1ページ分のデータを抽出
+        $products_data = $this->shop_model->get_product_list_ar($table,$table_stocks);
 
-		}
+        //抽出したデータをhtmlに収める
+        $products_html = $this->get_product_list_html($products_data);
+
 
     }
 
