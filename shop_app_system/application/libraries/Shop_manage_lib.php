@@ -19,7 +19,7 @@ class Shop_manage_lib {
                                 $filename = $data["file_name"];//
                                 
                         }
-
+echo $error;
 
                 return array("error"=>$error,"filename"=>$filename);
         }
@@ -39,7 +39,14 @@ class Shop_manage_lib {
                 rename($source_image,$rename_path);
                 
                 $config['image_library'] = 'ImageMagick';
-                $config['library_path'] = '/usr/bin';
+                
+                        if(DIRECTORY_SEPARATOR == '\\'){
+                                #サーバがwindowsの場合のパス
+                                $config['library_path'] = 'C:\\xampp\\php\\ext\\bin';
+                        }else{
+                                $config['library_path'] = '/usr/bin';
+                        }
+
                 $config['source_image'] = $rename_path;
                 $config['maintain_ratio'] = TRUE;
                 $config['new_image'] = $rename_path_thumb;

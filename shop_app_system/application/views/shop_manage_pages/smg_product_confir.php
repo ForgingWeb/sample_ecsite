@@ -40,7 +40,7 @@ $hidden_arr["role2_id"] = $role2_id;//カテゴリ３のid
 $hidden_arr["text_overview"] = $text_overview;//商品の概要
 $hidden_arr["text_etailed"] = $text_etailed;//商品の詳細
 $hidden_arr["maincolor"] = $maincolor;
-
+      
 $i=0;
 foreach($color_data_ar as $key1 => $val_ar)
 {

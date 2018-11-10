@@ -1,7 +1,6 @@
  <?php
  
- $str = random_string('alpha', 3);
- $str .= random_string('alnum', 3);
+ $str = random_string('alnum', 6);
  $input_hidden = form_hidden('str_org', $str);
  ?>
         <!-- contents -->

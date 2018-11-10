@@ -24,9 +24,15 @@ class Shop_manage extends CI_Controller {
         $this->description="";
         $this->keywords="";
         $this->shop_url = "/CI_shop/shop/";
-        $this->tmp_dir = "/var/www/html/CI_shop/shop_tmp/";
+        if(DIRECTORY_SEPARATOR == '\\'){
+            #サーバがwindowsの場合のパス
+            $this->tmp_dir = 'C:\\xampp\\htdocs\\CI_shop\\shop_tmp\\';//"/var/www/html/CI_shop/shop_tmp/";
+            $this->products_dir = 'C:\\xampp\\htdocs\\CI_shop\\shop_products_img\\';
+        }else{
+            $this->tmp_dir = "/var/www/html/CI_shop/shop_tmp/";//"/var/www/html/CI_shop/shop_tmp/";
+            $this->products_dir = "/var/www/html/CI_shop/shop_products_img/";
+        }
         $this->tmp_url = "/shop_tmp";
-        $this->products_dir = "/var/www/html/CI_shop/shop_products_img/";
         $this->products_url = "/shop_products_img";
         $this->colornum = 5;//選択できる色数
         $this->sizenum = 5;//選択できるサイズ数
@@ -130,18 +136,6 @@ class Shop_manage extends CI_Controller {
 
         $this->set_view($data);
     }
-
-
-    public function smg_product_list(){
-        /*商品一覧ページ*/     
-        /*
-        商品の登録
-        登録内容：
-        メインの画像、商品名、値段、カラー、サイズ、メイン画像、商品説明概要、セール期間
-        */
-    
-    }
-
 
     public function smg_product_confir()
     {
@@ -397,18 +391,173 @@ class Shop_manage extends CI_Controller {
 
     public function smg_product_exe(){
         /*商品登録確認画面実行*/
-        var_dump($this->input->post() );
-        /*
-        foreach($this->input->post() as $idx => $val){
-            if($val != null)
+        //var_dump($this->input->post() );
+        //テーブル: productsへ格納するデータ
+        $photo_file = array();
+        $product_name = $this->input->post("productname");
+        $price = $this->input->post("price");
+        $id_lastcategory = $this->input->post("role2_id");
+        $text_overview = $this->input->post("text_overview");
+        $text_etailed = $this->input->post("text_etailed");
+        $photo_other_upnames_ar = $this->input->post("photo_other_upnames");
+        $id_color_main = $this->input->post("maincolor");
+        $insert_data["name"] = $product_name;
+        $insert_data["listprice"] = $price;
+        $insert_data["id_lastcategory"] = $id_lastcategory;
+        $insert_data["text_overview"] = $text_overview;
+        $insert_data["text_etailed"] = $text_etailed;
+        $insert_data["id_color_main"] = $id_color_main;
+        
+        if($photo_other_upnames_ar){
+            foreach($photo_other_upnames_ar as $key => $val)
             {
-            echo "$idx = $val<br>";
+                $num = sprintf('%02d', $key+1);
+                $name_num = "photo_other_".$num;
+                $insert_data[$name_num] = $val;
+                $photo_file[] = $val;
             }
         }
-        */
+
+        /**insert**/
+        /**get id_product**/
+
+        $table = "products";
+        $id_product = $this->shop_model->insert_get_id($table,$insert_data);
+
+        //テーブル: products_stocksへ格納するデータ
+        $table = "products_stocks";
+        $colornum = $this->colornum;//選択できる色数
+        $sizenum = $this->sizenum;//選択できるサイズ数
+
+
+        for($i=0;$i<$colornum;$i++)
+        {
+                //色のidの数だけ繰り返す
+            $insert_data = array();
+            $insert_data["id_product"] = $id_product;
+
+            $colorname = 'color_'.$i;
+            $id_products_colors = $this->input->post($colorname);
+            $insert_data["id_products_colors"] = $id_products_colors;
+
+            if($id_products_colors){
+                $photoname = $this->input->post($colorname.'_photoname');
+                $insert_data["photoname"] = $photoname;
+                $photo_file[] = $photoname;
+
+
+                for($t=0;$t<$sizenum;$t++)
+                {
+                //$sizenum回　繰り返す
+                $id_size = $this->input->post($colorname.'_'.$t.'_sizeid');
+                $stock = $this->input->post($colorname.'_'.$t.'_stocknum');
+                if($stock == "--"){$stock = null; }
+                $insert_data["id_size"] = $id_size;
+                $insert_data["stock"] = $stock;
+
+                //** insert */
+                $this->shop_model->insert($table,$insert_data);
+
+                }
+
+            }
+        }
+
+        // $photo_file 画像の移動
+        foreach($photo_file as $val)
+        {
+            $old = $this->tmp_dir.$val;
+            $new = $this->products_dir.$val;
+            $tumb_old = $this->tmp_dir."tumb_".$val;
+            $tumb_new = $this->products_dir."tumb_".$val;
+            
+            if (copy($old, $new)) {
+                unlink($old);
+            }
+            if (copy($tumb_old, $tumb_new)) {
+                unlink($tumb_old);
+            }
+              
+            /*
+            //確実にファイルのリネームがおわるまで待つ
+            usleep(1000000); //1秒待つ
+            rename($old, $new);
+
+            usleep(1000000); //1秒待つ
+            rename($tumb_old, $tumb_new);
+            */
+
+        }
+        /**商品一覧ページへ一覧移動 **/
+        header( "Location: /CI_shop/smg_product_list/" ) ;
+        exit ;
     
     }
 
+
+    public function smg_product_list()
+    {
+        /*商品一覧ページ*/
+        /*productsから商品単位のデータを取得*/
+        /**products_stocks から色別、サイズ別のデータを取得 */
+
+        /*ページネーション*/
+        $this->load->library('pagination');
+
+        /*全商品の数取得    */
+        $table = "products";
+        $link["clamn"] = "delete_flag";
+        $link["val"] = null;
+        $product_cnt = $this->shop_model->get_count_all($table,$like);
+
+        //ページネーションのための設定
+        $config['base_url'] = '/CI_shop/shop_manage/';
+        $config['total_rows'] = $product_cnt;
+        $config['per_page'] = 20;
+
+        //$config['uri_segment'] = 3;
+        //$config['num_links'] = 2;
+        //最初のページへのリンクのカスタマイズ
+        //$config['first_link'] = '最初';
+        //$config['first_tag_open'] = '<div>';
+        //$config['first_tag_close'] = '</div>';
+        //最後のページへのリンクのカスタマイズ
+        //$config['last_link'] = '最後';
+        //$config['last_tag_open'] = '<div>';
+        //"最初" のページへのリンクの開始タグ。
+        //$config['last_tag_close'] = '</div>';
+        //"現在のページ" のページ番号のカスタマイズ
+        //$config['cur_tag_open'] = '<b>';
+        //"現在" のページの番号の開始タグ。
+        //$config['cur_tag_close'] = '</b>';
+        //$config['attributes'] = array('class' => 'myclass');
+
+        //ページネーション作成
+        $this->pagination->initialize($config);
+        echo $this->pagination->create_links();
+
+        //ページ単位の情報を取得
+		$this->db->select("id,name,id_color_main,listprice");
+        $this->db->limit($limit,$num );//limit
+        $query = $this->db->get($table);
+        
+        $colornum = $this->colornum;//選択できる色数
+        $sizenum = $this->sizenum;//選択できるサイズ数
+
+        foreach ($query->result_array() as $row){
+			$products_data["id"] = $row["id"];
+			$products_data["name"] = $row["name"];
+            $products_data["id_color_main"] = $row["id_color_main"];
+            for ($i=0; $i < $colornum; $i++) {
+            //色別の情報を取得
+                for ($i=0; $i < $sizenum; $i++) { 
+                    # サイズ別の在庫数を取得
+                }
+            }
+
+		}
+
+    }
 
     public function smg_category_edit()
     {

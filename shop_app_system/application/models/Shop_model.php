@@ -290,4 +290,26 @@ return $html;
       $query = $this->db->get($table);
       return $query;
     }
+
+    function insert_get_id($table,$insert_data)
+    {
+      $this->db->insert($table, $insert_data);
+      return $this->db->insert_id();
+    }
+
+    function insert($table,$insert_data)
+    {
+      $this->db->insert($table, $insert_data);
+    }
+    
+    function get_count_all($table,$like = array())
+    {
+        if(! empty($like))
+        {
+        $this->db->like($like["clamn"], $like['val']);
+        }
+        $this->db->from($table);
+        return $this->db->count_all_results();
+    }
+
 }

@@ -11,6 +11,7 @@
   $role0_id = $this->input->post("role0_id");//カテゴリ１のid
   $role1_id = $this->input->post("role1_id");//カテゴリ２のid
   $role2_id = $this->input->post("role2_id");//カテゴリ３のid
+  $maincolor = $this->input->post("maincolor");//maincolor
   }
             //$css = 'class="form-control"';
             $colornum = $this->colornum;//選択できる色数
@@ -301,10 +302,8 @@ EOM;
                         </div>
                           <label class="custom-control custom-radio custom-control-inline">
                           <?php if(($i==0) && (! isset($maincolor))):
-                                 if(isset($flag)): ?>
+                                 if(! isset($flag)): ?>
                                 <input type="radio" class="custom-control-input" name="maincolor" value="color_<?php echo $i; ?>" checked="checked">
-                                <?php elseif(isset($maincolor)): ?>
-                                <input type="radio" class="custom-control-input" name="maincolor" value="color_<?php echo $i; ?>" checked="checked" >
                                 <?php else: ?>
                                 <input type="radio" class="custom-control-input" name="maincolor" value="color_<?php echo $i; ?>">
                                 <?php endif; ?>
@@ -339,6 +338,7 @@ EOM;
                               echo $size_select;*/
                               $sizeid = $size_ar[$i2]["id"];
                               $sizename = $size_ar[$i2]["name"];
+
                               ?>
                                <div class="input-group">
                               <span class="input-group-prepend">
@@ -347,7 +347,8 @@ EOM;
                               </span>
                               <?php
                               $tagname = "color_{$i}_size_{$sizeid}_stock";
-                              $set_value = set_value($tagname);
+                              $stocknum_name = "color_".$i."_".$i2."_stocknum";
+                              $set_value = set_value($stocknum_name);
                               $data = array(
                                 'type' => "number",
                                 'name'          => $tagname,
@@ -370,11 +371,6 @@ EOM;
 </div><!-- ends color_units -->
 </div>
                           <!-- end1-->
-                    
-                        
-
-
-
                   <div class="card-header">
                     <h3 class="card-title">補足写真（モデル別・シーン別の画像等）のアップロード</h3>
                   </div>
