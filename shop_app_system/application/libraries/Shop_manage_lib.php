@@ -35,7 +35,7 @@ echo $error;
                 $source_image = $tmp_dir.$filename;
                 $rename_path = $tmp_dir.$newname;
                 
-                $rename_path_thumb = $tmp_dir."tumb_".$newname;
+                $rename_path_thumb = $tmp_dir."thumb_".$newname;
                 rename($source_image,$rename_path);
                 
                 $config['image_library'] = 'ImageMagick';

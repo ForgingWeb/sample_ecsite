@@ -83,24 +83,126 @@ EOM;
 return $html;
 
     }
-    function get_sale_product_id($n)
-    {
-      //sale6点のidを抽出
-      $sale_ar = array();
-      for($i=0;$i<$n;$i++){
-        $sale_ar[] = $i;
-      }
-    return $sale_ar;
+    
+    
+
+
+  function get_id($table,$num,$first)
+  {
+    $this->db->order_by("id", "DESC");
+    $this->db->limit($num, $first);
+    $query = $this->db->get($table);
+    $ar = array();
+    foreach ($query->result_array() as $row)
+    { 
+      $ar[] = $row['id'];
     }
-    function get_product_detaile($id_ar){
+    return $ar;
+  }
+
+  /*
+    function get_id($table,$num,$first)
+    {
+      $this->db->order_by("id", "DESC");
+      $this->db->limit($num, $first);
+      $query = $this->db->get($table);
+      return $query;
+    }
+*/
+
+    function get_sale_product_id($num)
+    {
+      $table = "products";
+      $first = 0;
+      return $this->shop_model->get_id($table,$num,$first);
+    }
+    
+    function get_product_detaile($id_ar,$flag=""){
       //prodauctのidの配列を受け取り、各商品の詳細データを取得する
       //詳細データ　＝　id、商品名、説明、在庫数、色数、色別の在庫数,画像ファイル名
-      $detail_ar = array();
-      $n = count($id_ar);
-      for($i=0;$i<$n;$i++){
-        $detail_ar[] = $i;
+      //id,商品名、画像ファイル名を取得
+      if(! is_array($id_ar)){
+        $n = $id_ar;
+        $id_ar = array($n);
       }
-      return $detail_ar;
+
+      for($i=0;$i<count($id_ar);$i++)
+      {
+      if($flag == ""){
+      $this->db->select("id,name,id_color_main,text_overview,listprice");
+      }
+      $this->db->where("id",$id_ar[$i]);
+      $query = $this->db->get("products");
+
+      if($query->num_rows() > 0){
+        $row = $query->row_array();
+        $data[$i]["id"] = $row["id"];
+        $data[$i]["name"] = $row["name"];
+        $data[$i]["id_color_main"] = $row["id_color_main"];
+        $data[$i]["name_color_main"]  = $this->shop_model->get_value_one_column("products_colors",$row["id_color_main"],"color_name");
+        
+
+        $data[$i]["listprice"] = $row["listprice"];
+        $data[$i]["text_overview"] = $row["text_overview"];
+        if($flag != ""){
+          $data[$i]["id_lastcategory"] = $row["id_lastcategory"];
+          $data[$i]["in_tax"] = $row["text_etailed"];
+          $data[$i]["text_etailed"] = $row["text_etailed"];
+          $data[$i]["photo_other_01"] = $row["photo_other_01"];
+          $data[$i]["photo_other_02"] = $row["photo_other_02"];
+          $data[$i]["photo_other_03"] = $row["photo_other_03"];
+          $data[$i]["photo_other_04"] = $row["photo_other_04"];
+          $data[$i]["photo_other_05"] = $row["photo_other_05"];
+        }
+
+        
+        $this->db->where('id_products_colors', $row["id_color_main"]);
+        $this->db->where('id_product', $id_ar[$i]);
+        $this->db->limit(1,1);
+        $this->db->select("id,photoname");
+        //sort id_products_colors	id_size
+          $query_sts = $this->db->get("products_stocks");
+          $row_sts = $query_sts->row_array();
+          $data[$i]["photoname"] = $row_sts["photoname"];
+          if($flag != ""){
+             /* $this->db->where('id_product', $id_ar[$i]);
+            //sort id_products_colors	id_size
+              $query_sts = $this->db->get("products_stocks");*/
+              //もう一度id,photonameに接続して、サイズの抽出をする
+              $this->db->where('id_products_colors', $row["id_color_main"]);
+              $this->db->where('id_product', $id_ar[$i]);
+              //$this->db->limit(1,1);
+              $this->db->select("id,photoname,id_size,stock");
+              $query_sts2 = $this->db->get("products_stocks");
+              $row_sts2 = $query_sts2->row_array();
+              $t=0;
+              foreach ($query_sts2->result_array() as $row_sts)
+              {
+                /*id ,id_product,id_products_colors,
+                id_size,photoname
+                stock*/
+              //$data[$i]["color"][$t] = $row_sts["photoname"];
+              /*/color_ar["size_id"=size_id,
+              20181114　itemページではメインカラー写真のみが反映される。
+              カラー毎のサイズと在庫データは後日実装予定  ]
+        
+                */
+                  $id_size = $row_sts2['id_size'];
+                  $stock = $row_sts2['stock'];
+                  $data[$i]["size"][$t]["id_size"]=$id_size;
+                  $name_size = $this->shop_model->get_value_one_column("sizes",$id_size,"name");
+                  $data[$i]["size"][$t]["name_size"]=$name_size;
+                  $data[$i]["size"][$t]["stock"]=$stock;
+              $t++;
+
+              }
+
+          }
+        }
+
+      }
+
+      return $data;
 
     }
 
@@ -208,6 +310,7 @@ return $html;
 
     function get_value_one_column($table,$id,$column)
     {
+      //$tableからidでデータを検索して、指定columnの値を返す
       $this->db->select("id,".$column);
       $this->db->where('id', $id);
       $query = $this->db->get($table);
@@ -282,16 +385,6 @@ return $html;
       return $ar;
     }
 
-
-    function get_select_limit($table,$num,$limit)
-    {
-      $this->db->order_by("FJ_id", "asc");
-      $this->db->limit($num, $limit);
-      $query = $this->db->get($table);
-      return $query;
-    }
-
-
     function insert_get_id($table,$insert_data)
     {
       $this->db->insert($table, $insert_data);
@@ -309,46 +402,64 @@ return $html;
     {
         if(! empty($like))
         {
-        $this->db->like($like["clamn"], $like['val']);
+        $this->db->where($like["clamn"], $like['val']);
         }
         $this->db->from($table);
         return $this->db->count_all_results();
     }
 
     
-    function get_product_list_ar($table,$table_stocks)
+    function get_product_list_ar($table,$table_stocks,$per_page,$pagen)
     {
+      
+      $this->db->select("id,name,id_color_main,listprice");
+      $this->db->limit($per_page,$pagen);//limit
+      $this->db->order_by("id", "DESC");
+      $query = $this->db->get($table);
+      
+
+      $cnt = 0;
       foreach ($query->result_array() as $row){
-          $products_data["id"] = $row["id"];
-          $products_data["name"] = $row["name"];
-          $products_data["id_color_main"] = $row["id_color_main"];
+          $products_data[$cnt]["id"] = $row["id"];
+          $products_data[$cnt]["name"] = $row["name"];
+          $products_data[$cnt]["id_color_main"] = $row["id_color_main"];
           
           //色別の情報を取得
           //$this->db->select("id,name,id_color_main,listprice");
-          $this->db->where('id_product', $products_data["id"]);
+          $this->db->where('id_product', $products_data[$cnt]["id"]);
               //sort id_products_colors	id_size
-          $query_sts = $this->db->get($products_stocks);
+          $query_sts = $this->db->get($table_stocks);
 
-          $before_color_id = "";
 
           $i=$t=0;
+          $firstsize = "";
           foreach ($query_sts->result_array() as $row_sts)
           {
-
-            if(($before_color_id != $row_sts["d_products_colors"])&&($before_color_id != ""))
+            if($firstsize == ""){
+              $firstsize = $row_sts["id_size"];
+            }
+            else if($firstsize  == $row_sts["id_size"])
             {
               $i++;
               $t = 0;
             }
-            $products_data["colors"][$i]["d_products_colors"] = $row_sts["d_products_colors"];
-            $products_data["colors"][$i][$t]["id"] = $row_sts["id"];
-            $products_data["colors"][$i][$t]["id_size"] = $row_sts["id_size"];
-            $products_data["colors"][$i][$t]["stock"] = $row_sts["stock"];
+            if($row["id_color_main"] == $row_sts["id_products_colors"])
+            {   
+              $products_data[$cnt]["photoname"] = $row_sts["photoname"];
+            }
+            $id_products_colors = $row_sts["id_products_colors"];
+            //カラー名取得
+            $color_name = $this->shop_model->get_value_one_column("products_colors",$id_products_colors,"color_name");
+            $products_data[$cnt]["colors"][$i]["color_name"] = $color_name;
+            $products_data[$cnt]["colors"][$i]["size"][$t]["id"] = $row_sts["id"];
+            $products_data[$cnt]["colors"][$i]["size"][$t]["id_size"] = $row_sts["id_size"];
+            $products_data[$cnt]["colors"][$i]["size"][$t]["stock"] = $row_sts["stock"];
 
-            $before_color_id = $row_sts["d_products_colors"];
+            
             $t++;
 
           }
+          $cnt++;
               
           
       }

@@ -40,6 +40,7 @@ $hidden_arr["role2_id"] = $role2_id;//カテゴリ３のid
 $hidden_arr["text_overview"] = $text_overview;//商品の概要
 $hidden_arr["text_etailed"] = $text_etailed;//商品の詳細
 $hidden_arr["maincolor"] = $maincolor;
+$hidden_arr["toback"] = "y";
       
 $i=0;
 foreach($color_data_ar as $key1 => $val_ar)
@@ -65,15 +66,17 @@ foreach($color_data_ar as $key1 => $val_ar)
     $i++;
 }
 $icnt = $i;
+$i=0;
 if(count($photo_other_upnames) > 0)
 {
     foreach($photo_other_upnames as $key => $val)
     {
-        $photo_other_upnames[$key] = $val;
+        //$photo_other_upnames[$key] = $val;
 
-        $name = "photo_other_upnames[]";
+        $name = "photo_other_upnames[{$i}]";
         $photoname = $val;
         $hidden_arr[$name] = $photoname;
+        $i++;
     }
 }
 ?>

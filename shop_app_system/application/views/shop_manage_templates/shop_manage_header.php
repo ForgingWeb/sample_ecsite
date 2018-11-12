@@ -16,10 +16,13 @@
               <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                   <li class="nav-item">
-                    <a href="/CI_shop/shop_manage/shop_manage_top/" class="nav-link"><i class="fe fe-home"></i> Home</a>
+                    <a href="/CI_shop/shop/shop_index/" class="nav-link"><i class="fe fe-home"></i> ECサイト</a>
                   </li>
                   <li class="nav-item">
-                    <a href="javascript:void(0)" class="nav-link"><i class="fe fe-box"></i><i class="fe fe-file"></i> Interface</a>
+                    <a href="/CI_shop/shop_manage/smg_product_list/" class="nav-link">　 商品一覧</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/CI_shop/shop_manage/smg_product_registration/" class="nav-link">　 新規商品追加</a>
                   </li>
                 </ul>
               </div>

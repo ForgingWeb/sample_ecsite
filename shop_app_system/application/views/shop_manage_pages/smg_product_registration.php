@@ -258,7 +258,7 @@ EOM;
   <div class="row color_unit">
                       <div class="col-sm-3 col-md-3">
                         <div class="form-group">
-                          <label class="form-label">色の選択 <?php echo $i+1 ?></label>
+                          <label class="form-label">色の選択 <?php #echo $i+1; ?></label>
                           <?php
                           $tagname = "color_{$i}";
                            ?>
@@ -310,7 +310,7 @@ EOM;
                           <?php else: ?>
                             <input type="radio" class="custom-control-input" name="maincolor" value="color_<?php echo $i; ?>" <?php echo  set_radio('maincolor', 'color_'.$i); ?>" >
                           <?php endif; ?>
-                            <span class="custom-control-label">この画像を商品のメイン画像に指定する。</span>
+                            <span class="custom-control-label">この画像をがメイン画像になります。</span>
                           </label>
                         </div>
                       </div>
@@ -348,7 +348,11 @@ EOM;
                               <?php
                               $tagname = "color_{$i}_size_{$sizeid}_stock";
                               $stocknum_name = "color_".$i."_".$i2."_stocknum";
-                              $set_value = set_value($stocknum_name);
+                              if($this->input->post("toback") == "y"){
+                                $set_value = set_value($stocknum_name);
+                              }else{
+                                $set_value = set_value($tagname);
+                              }
                               $data = array(
                                 'type' => "number",
                                 'name'          => $tagname,
@@ -432,4 +436,3 @@ endfor;
           <!-- /div --><!-- row コメントアウト　-->
         </div>
       </div>
-    </div>
