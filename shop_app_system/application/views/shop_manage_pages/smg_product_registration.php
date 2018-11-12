@@ -348,7 +348,11 @@ EOM;
                               <?php
                               $tagname = "color_{$i}_size_{$sizeid}_stock";
                               $stocknum_name = "color_".$i."_".$i2."_stocknum";
-                              $set_value = set_value($stocknum_name);
+                              if($this->input->post("toback") == "y"){
+                                $set_value = set_value($stocknum_name);
+                              }else{
+                                $set_value = set_value($tagname);
+                              }
                               $data = array(
                                 'type' => "number",
                                 'name'          => $tagname,
@@ -432,4 +436,3 @@ endfor;
           <!-- /div --><!-- row コメントアウト　-->
         </div>
       </div>
-    </div>

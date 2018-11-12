@@ -506,7 +506,7 @@ EOM;
         <!-- BEGIN Login -->
         <span>
         <a href="{$this_shop_url}shop_account/">My Account</a> | 
-        <a href="page_login/">Log In</a>
+        <a href="">Log In</a>
         </span>　
         <!-- END Login -->
 
@@ -753,26 +753,35 @@ return $html;
 
 }
 
-function mk_sale_product($detail_ar,$this_shop_url)
+function mk_sale_product($data_ar,$this_shop_url)
 {
   //salのスライドショー
+  //product_img_dir 
+  $CI =& get_instance();
+  $imgdir = $CI->product_img_dir;
+
     $html = "";
-    for($i=0;$i<count($detail_ar);$i++)
+    for($i=0;$i<count($data_ar);$i++)
     {
+      $id = $data_ar[$i]["id"];//id
+      $name = $data_ar[$i]["name"];//商品名
+      $listprice = number_format($data_ar[$i]["listprice"]);//値段
+      $photoname = $data_ar[$i]["photoname"];//写真ファイル名
+
     $html .= <<<EOM
     <div>
     <div class="product-item">
       <div class="pi-img-wrapper">
-      <a href="{$this_shop_url}shop_item/id">
-        <img src="/CI_shop/shop_assets/pages/img/products/model1.jpg" class="img-responsive" alt="Berry Lace Dress">
+      <a href="{$this_shop_url}shop_item/{$id}">
+        <img src="{$imgdir}{$photoname}" class="img-responsive" alt="Berry Lace Dress">
       </a>
         <div>
-          <a href="/CI_shop/shop_assets/pages/img/products/model1.jpg" class="btn btn-default fancybox-button">Zoom</a>
+          <a href="{$imgdir}{$photoname}" class="btn btn-default fancybox-button">Zoom</a>
           <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
         </div>
       </div>
-      <h3><a href="{$this_shop_url}shop_item/">Berry Lace Dress</a></h3>
-      <div class="pi-price">$29.00</div>
+      <h3><a href="{$this_shop_url}shop_item/{$id}">Berry Lace Dress</a></h3>
+      <div class="pi-price">￥{$listprice}</div>
       <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
       <div class="sticker sticker-sale"></div>
     </div>
@@ -783,26 +792,32 @@ EOM;
     return $html;
 }
 
-function mk_content($detail_ar,$this_shop_url)
+function mk_content($data_ar,$this_shop_url)
 {
+  $CI =& get_instance();
+  $imgdir = $CI->product_img_dir;
   $html = "";
-  
-  for($i=0;$i<count($detail_ar);$i++)
+  for($i=0;$i<count($data_ar);$i++)
   {
+    $id = $data_ar[$i]["id"];//id
+    $name = $data_ar[$i]["name"];//商品名
+    $listprice = number_format($data_ar[$i]["listprice"]);//値段
+    $photoname = $data_ar[$i]["photoname"];//写真ファイル名
+
   $html .= <<<EOM
   <div>
   <div class="product-item">
     <div class="pi-img-wrapper">
-    <a href="{$this_shop_url}shop_item/id">
-      <img src="/CI_shop/shop_assets/pages/img/products/model7.jpg" class="img-responsive" alt="Berry Lace Dress">
+    <a href="{$this_shop_url}shop_item/{$id}">
+      <img src="{$imgdir}{$photoname}" class="img-responsive" alt="Berry Lace Dress">
     </a>
       <div>
         <a href="/CI_shop/shop_assets/pages/img/products/k1.jpg" class="btn btn-default fancybox-button">Zoom</a>
         <a href="#product-pop-up" class="btn btn-default fancybox-fast-view">View</a>
       </div>
     </div>
-    <h3><a href="{$this_shop_url}shop_item/">Berry Lace Dress</a></h3>
-    <div class="pi-price">$29.00</div>
+    <h3><a href="{$this_shop_url}shop_item/{$id}">Berry Lace Dress</a></h3>
+    <div class="pi-price">￥{$listprice}</div>
     <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
     <div class="sticker sticker-new"></div>
   </div>
@@ -813,18 +828,29 @@ EOM;
   return $html;
 }
 
-function mk_more_products($detail_ar,$this_shop_url)
+function mk_more_products($data_ar,$this_shop_url)
 {
+  $CI =& get_instance();
+  $imgdir = $CI->product_img_dir;
+
+  
+
   $html="";
-  for($i=0;$i<count($detail_ar);$i++)
+
+  for($i=0;$i<count($data_ar);$i++)
   {
+    $id = $data_ar[$i]["id"];//id
+    $name = $data_ar[$i]["name"];//商品名
+    $listprice = number_format($data_ar[$i]["listprice"]);//値段
+    $photoname = $data_ar[$i]["photoname"];//写真ファイル名
+
   $html .= <<<EOM
 
   <div>
     <div class="product-item">
       <div class="pi-img-wrapper">
-      <a href="{$this_shop_url}shop_item/id">
-        <img src="/CI_shop/shop_assets/pages/img/products/model2.jpg" class="img-responsive" alt="Berry Lace Dress">
+      <a href="{$this_shop_url}shop_item/{$id}">
+        <img src="{$imgdir}{$photoname}" class="img-responsive" alt="Berry Lace Dress">
         </a>
         <div>
           <a href="/CI_shop/shop_assets/pages/img/products/k4.jpg" class="btn btn-default fancybox-button">Zoom</a>
@@ -832,7 +858,7 @@ function mk_more_products($detail_ar,$this_shop_url)
         </div>
       </div>
       <h3><a href="shop_item">Berry Lace Dress</a></h3>
-      <div class="pi-price">$29.00</div>
+      <div class="pi-price">￥{$listprice}</div>
       <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
       <!-- div class="sticker sticker-new"></div -->
     </div>
@@ -844,16 +870,27 @@ EOM;
 return $html;
 }
 
-function mk_bestsellers($detail_ar,$this_shop_url)
+function mk_bestsellers($data_ar,$this_shop_url)
 {
+  $CI =& get_instance();
+  $imgdir = $CI->product_img_dir;
+
   $html="";
-  for($i=0;$i<count($detail_ar);$i++){
+ 
+  for($i=0;$i<count($data_ar);$i++)
+  {
+    $id = $data_ar[$i]["id"];//id
+    $name = $data_ar[$i]["name"];//商品名
+    $listprice = number_format($data_ar[$i]["listprice"]);//値段
+    $photoname = $data_ar[$i]["photoname"];//写真ファイル名
+    $text_overview = $data_ar[$i]["text_overview"];//写真ファイル名
+
   $html .= <<<EOM
 
   <div class="item">
-  <a href="{$this_shop_url}shop_item/id"><img src="/CI_shop/shop_assets/pages/img/products/model6.jpg" alt="Some Shoes in Animal with Cut Out"></a>
-  <h3><a href="shop_item">Some Shoes in Animal with Cut Out</a></h3>
-  <div class="price">$31.00</div>
+  <a href="{$this_shop_url}shop_item/{$id}"><img src="{$imgdir}{$photoname}" alt="Some Shoes in Animal with Cut Out"></a>
+  <h3><a href="shop_item">{$text_overview}</a></h3>
+  <div class="price">￥{$listprice}</div>
 </div>
 
 EOM;
@@ -862,19 +899,28 @@ EOM;
   return $html;
 }
 
-function mk_bestsellers_mobile($detail_ar,$this_shop_url)
+function mk_bestsellers_mobile($data_ar,$this_shop_url)
 {
+  $CI =& get_instance();
+  $imgdir = $CI->product_img_dir;
+
   $html="";
-  for($i=0;$i<count($detail_ar);$i++){
+  for($i=0;$i<count($data_ar);$i++)
+  {
+    $id = $data_ar[$i]["id"];//id
+    $name = $data_ar[$i]["name"];//商品名
+    $listprice = number_format($data_ar[$i]["listprice"]);//値段
+    $photoname = $data_ar[$i]["photoname"];//写真ファイル名
+
   $html .= <<<EOM
 
   <div>
   <div class="product-item">
     <div class="pi-img-wrapper">
-  <a href="{$this_shop_url}shop_item/id"><img src="/CI_shop/shop_assets/pages/img/products/model6.jpg" alt="Some Shoes in Animal with Cut Out"></a>
+  <a href="{$this_shop_url}shop_item/{$id}"><img src="{$imgdir}{$photoname}" alt="Some Shoes in Animal with Cut Out"></a>
     </div>
   <h3><a href="shop_item">Some Shoes in Animal with Cut Out</a></h3>
-  <div class="pi-price">$31.00</div>
+  <div class="pi-price">￥{$listprice}</div>
     <a href="javascript:;" class="btn btn-default add2cart">Add to cart</a>
 </div>
 </div>
@@ -885,38 +931,51 @@ EOM;
   return $html;
 }
 
-function mk_mainphotos($photonames_main,$photonames_color,$detail_ar,$asset_dir)
+function mk_mainphotos($detail_ar,$asset_dir)
 {
+  $CI =& get_instance();
+  $imgdir = $CI->product_img_dir;
 
-$html = "";
+  $html="";
+  $i=0;
+  $photonames_main = array(
+                          $detail_ar[$i]["photoname"],
+                          $detail_ar[$i]["photo_other_01"],
+                          $detail_ar[$i]["photo_other_02"],
+                          $detail_ar[$i]["photo_other_03"],
+                          $detail_ar[$i]["photo_other_04"],
+                          $detail_ar[$i]["photo_other_05"]
+                      );
 $cnt = count($photonames_main);
+$f = false;
 for($i=0;$i<$cnt;$i++)
 {
   $filename = $photonames_main[$i];
+  if($filename == null){continue;}
   if($i == 0)
   {
   $html .= <<<EOM
   <div class="product-main-image">
-  <img src="{$asset_dir}pages/img/products/{$filename}" alt="Cool green dress with red bell" class="img-responsive" data-BigImgsrc="/CI_shop/shop_assets/pages/img/products/{$filename}">
+  <img src="{$imgdir}{$filename}" alt="Cool green dress with red bell" class="img-responsive" data-BigImgsrc="{$imgdir}{$filename}">
   </div>
 EOM;
   }
 
-  if($i==2)
+  if($i==1)
   {
   $html .= "<div class=\"product-other-images\">";
+  $f = true;
   }
 
-  if($i>1)
+  if($i >= 1)
   {
-  $html .= "<a href=\"{$asset_dir}pages/img/products/{$filename}\" class=\"fancybox-button\" rel=\"photos-lib\"><img alt=\"Berry Lace Dress\" src=\"/CI_shop/shop_assets/pages/img/products/{$filename}\"></a>";
+  $html .= "<a href=\"{$imgdir}{$filename}\" class=\"fancybox-button\" rel=\"photos-lib\"><img alt=\"Berry Lace Dress\" src=\"{$imgdir}{$filename}\"></a>";
   }
 
-  if($i == ($cnt-1))
-  {
-  $html .= "</div>";
-  }
+}
 
+if($f){
+ $html .= "</div>";
 }
 
 return $html;
@@ -953,12 +1012,12 @@ return $html;
 
 }
 
-function mk_price(){
+function mk_price($val){
 $html = "";
 $html .= <<<EOM
 <div class="price">
-<strong><span>￥</span>4,700</strong>
-<em>￥<span>6,200</span></em>
+<strong><span>￥</span>$val</strong>
+<!-- em>￥<span>6,200</span></em -->
 </div>
 
 EOM;

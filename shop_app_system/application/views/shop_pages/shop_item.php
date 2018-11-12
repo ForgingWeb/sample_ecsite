@@ -2,7 +2,7 @@
     <div class="main">
       <div class="container">
         <ul class="breadcrumb">
-            <li><a href="shop_index/">Home</a></li>
+            <li><a href="/CI_shop/shop/shop_index/">Home</a></li>
             <li><a href="">Store</a></li>
             <li class="active">Cool green dress with red bell</li>
         </ul>
@@ -32,7 +32,7 @@
                 ?>
                 </div>
                 <div class="col-md-6 col-sm-6">
-                  <h1>Cool green dress with red bell</h1>
+                  <h1><?php print $text_overview; ?></h1>
                   <div class="price-availability-block clearfix">
                     <?php
                     print $price;

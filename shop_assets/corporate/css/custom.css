@@ -130,6 +130,11 @@
     padding-left:1rem;
     padding-right:1rem;
 }
+
+.pi-price {
+    min-width: 5em;
+}
+
 @media screen and (max-width:600px){
     .ecommerce .header {
     height:7rem;

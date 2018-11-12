@@ -400,13 +400,16 @@ class Shop_manage extends CI_Controller {
         $text_overview = $this->input->post("text_overview");
         $text_etailed = $this->input->post("text_etailed");
         $photo_other_upnames_ar = $this->input->post("photo_other_upnames");
-        $id_color_main = $this->input->post("maincolor");
+        $maincolor = $this->input->post("maincolor");
         $insert_data["name"] = $product_name;
         $insert_data["listprice"] = $price;
         $insert_data["id_lastcategory"] = $id_lastcategory;
         $insert_data["text_overview"] = $text_overview;
         $insert_data["text_etailed"] = $text_etailed;
-        $insert_data["id_color_main"] = $id_color_main;
+        
+        //$colorname = 'color_'.$maincolor;
+        $insert_data["id_color_main"] = $this->input->post($maincolor);
+
         
         if($photo_other_upnames_ar){
             foreach($photo_other_upnames_ar as $key => $val)
@@ -468,8 +471,8 @@ class Shop_manage extends CI_Controller {
         {
             $old = $this->tmp_dir.$val;
             $new = $this->products_dir.$val;
-            $tumb_old = $this->tmp_dir."tumb_".$val;
-            $tumb_new = $this->products_dir."tumb_".$val;
+            $tumb_old = $this->tmp_dir."thumb_".$val;
+            $tumb_new = $this->products_dir."thumb_".$val;
             
             if (copy($old, $new)) {
                 unlink($old);
@@ -489,7 +492,7 @@ class Shop_manage extends CI_Controller {
 
         }
         /**商品一覧ページへ一覧移動 **/
-        header( "Location: /CI_shop/smg_product_list/" ) ;
+        header( "Location: /CI_shop/shop_manage/smg_product_list/" ) ;
         exit ;
     
     }
@@ -497,59 +500,79 @@ class Shop_manage extends CI_Controller {
 
     public function smg_product_list()
     {
+        $this_page = "smg_product_list";
         /*商品一覧ページ*/
         /*productsから商品単位のデータを取得*/
         /**products_stocks から色別、サイズ別のデータを取得 */
 
         /*ページネーション*/
+        //---
+        $pagen = $this->uri->segment(3);
         $this->load->library('pagination');
 
         /*全商品の数取得    */
         $table = "products";
         $table_stocks = "products_stocks";
-        $link["clamn"] = "delete_flag";
-        $link["val"] = null;
-        $product_cnt = $this->shop_model->get_count_all($table,$like);
+        $where["clamn"] = "delete_flag";
+        $where["val"] = null;
+        $product_cnt = $this->shop_model->get_count_all($table,$where);
+        
 
         //ページネーションのための設定
-        $config['base_url'] = '/CI_shop/shop_manage/';
+        $config['base_url'] = '/CI_shop/shop_manage/smg_product_list/';
         $config['total_rows'] = $product_cnt;
-        $config['per_page'] = 20;
+        $config['per_page'] = 3;
 
         //$config['uri_segment'] = 3;
         //$config['num_links'] = 2;
         //最初のページへのリンクのカスタマイズ
-        //$config['first_link'] = '最初';
-        //$config['first_tag_open'] = '<div>';
-        //$config['first_tag_close'] = '</div>';
+        $config['first_link'] = '最初';
+        $config['first_tag_open'] = '<li>';
+        $config['first_tag_close'] = '</li>';
         //最後のページへのリンクのカスタマイズ
-        //$config['last_link'] = '最後';
-        //$config['last_tag_open'] = '<div>';
+        $config['last_link'] = '最後';
+        $config['last_tag_open'] = '<li>';
+        $config['last_tag_close'] = '</li>';
         //"最初" のページへのリンクの開始タグ。
-        //$config['last_tag_close'] = '</div>';
-        //"現在のページ" のページ番号のカスタマイズ
-        //$config['cur_tag_open'] = '<b>';
-        //"現在" のページの番号の開始タグ。
-        //$config['cur_tag_close'] = '</b>';
         //$config['attributes'] = array('class' => 'myclass');
+       // $config['first_link'] = '&lsaquo;&lsaquo;';
+        //$config['last_link'] = '&rsaquo;&rsaquo;';
+        $config['full_tag_open'] = "<ul class=\"pagination\">";
+        $config['full_tag_close'] = "</ul>";
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        //"現在のページ" のページ番号のカスタマイズ
+        $config['cur_tag_open'] = '<li class="active"><span>';
+        $config['cur_tag_close'] = '</span></li>';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_open'] = '</li>';
+        $config['next_link'] = '次へ';
+        $config['prev_link'] = '前へ';
+        $config['next_tag_open'] = '<li class="pg-next">';
+        $config['next_tag_close'] = '</li>';
+        $config['prev_tag_open'] = '<li class="pg-prev">';
+        $config['prev_tag_close'] = '</li>';
 
         //ページネーション作成
         $this->pagination->initialize($config);
-        echo $this->pagination->create_links();
+        $pagination_html = $this->pagination->create_links();
+        
 
         //ページ単位の情報を取得
-        $this->db->select("id,name,id_color_main,listprice");
-        $this->db->limit($limit,$num );//limit
-        $query = $this->db->get($table);
-        
         //$colornum = $this->colornum;//選択できる色数
         //$sizenum = $this->sizenum;//選択できるサイズ数
 
         //DBから1ページ分のデータを抽出
-        $products_data = $this->shop_model->get_product_list_ar($table,$table_stocks);
+        $products_data = $this->shop_model->get_product_list_ar($table,$table_stocks,$config['per_page'],$pagen);
+
 
         //抽出したデータをhtmlに収める
-        $products_html = $this->get_product_list_html($products_data);
+        $products_html = get_product_list_html($products_data);
+
+        $data = $this->set_page_data($this_page);
+        $data["products_html"] = $products_html;
+        $data["pagination_html"] = $pagination_html;
+        $this->set_view($data);
 
 
     }

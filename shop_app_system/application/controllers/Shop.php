@@ -6,6 +6,7 @@ class Shop extends CI_Controller {
     var $shop_url;
     var $asset_dir;
     var $manage_url;
+    var $product_img_dir;
 
     function __construct()
     {
@@ -20,6 +21,7 @@ class Shop extends CI_Controller {
         $this->shop_url = "/CI_shop/shop/";
         $this->asset_dir = "/CI_shop/shop_assets/";
         $this->manage_url = "/CI_shop/shop_manage/shop_manage_login/";
+        $this->product_img_dir = "/CI_shop//shop_products_img/";
     }
 
     function set_view($this_page,$data){
@@ -97,7 +99,8 @@ class Shop extends CI_Controller {
     {
         $this_page = 'shop_item';
         //**商品詳細ページ */
-        
+        $product_id = $this->uri->segment(3);
+
         $data = $this->set_page_data($this_page);
         $menu_ar = $this->shop_model->get_top_menu_ar();
         $data['sidebar'] = mk_sidebar($this_page,$menu_ar,$this->shop_url);
@@ -124,16 +127,19 @@ class Shop extends CI_Controller {
         $num = 1;
         //$id_ar = $this->shop_model->get_sale_product_id($num);
         //$detail_ar = $this->shop_model->get_product_detaile($id_ar);
-        $detail_ar["text_overview"] = "★dolore.";
-        $data['text_overview'] =  $detail_ar["text_overview"];
-        $detail_ar["text_etailed"] = "★Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed sit nonumy nibh sed euismod laoreet dolore magna aliquarm erat sit volutpat Nostrud duis molestie at dolore. Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed sit nonumy nibh sed euismod laoreet dolore magna aliquarm erat sit volutpat Nostrud duis molestie at dolore. Lorem ipsum dolor ut sit ame dolore adipiscing elit, sed sit nonumy nibh sed euismod laoreet dolore magna aliquarm erat sit volutpat Nostrud duis molestie at dolore.";
-        $data['text_etailed'] =  $detail_ar["text_etailed"];
-        $data['pull_sizes'] = "<option values='L'>L</option><option>M</option><option>XL</option>";
-        $data['pull_colors'] = "<option>Red</option><option>Blue</option><option>Black</option>";
+       
+        
+
+        $data['pull_sizes'] = "<option values='L'>--</option><option>--</option><option>--</option>";
+        $data['pull_colors'] = "<option>--</option><option>--</option><option>--</option>";
+
+        $detail_ar = $this->shop_model->get_product_detaile($product_id,"all");
+        $data['text_overview'] = $detail_ar[0]['text_overview'];
+;
         //ターゲット商品の写真表示部分のHTML作成
-        $photonames_main = $detail_ar["photonames"] = array("model3.jpg","model4.jpg","model5.jpg","model6.jpg");
-        $photonames_color = $detail_ar["photonames_color"] = array("model10.jpg","model5.jpg","model5.jpg","model6.jpg");
-        $data["mainphotos"] = mk_mainphotos($photonames_main,$photonames_color,$detail_ar,$this->asset_dir);
+       // $photonames_color = $detail_ar["photonames_color"] = array("model10.jpg","model5.jpg","model5.jpg","model6.jpg");
+        
+        $data["mainphotos"] = mk_mainphotos($detail_ar,$this->asset_dir);
 
         //平均評価の★を設定
         $data["avarage"] = "3.75";
@@ -141,7 +147,7 @@ class Shop extends CI_Controller {
         //レビューの取得
         $data["reviews_cnt"] = "(4)";
         $data["reviews"] = mk_reviews();
-        $data["price"] = mk_price();
+        $data["price"] = mk_price(number_format($detail_ar[0]["listprice"]) );
 
         $this->set_view($this_page,$data);
     }
