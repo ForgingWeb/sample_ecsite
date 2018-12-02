@@ -8,8 +8,8 @@ applicationとsystemは、shop_app_systemに格納しているので、<br>
 
 「sample_ecsite」は、現在制作中で随時更新します。
 
-現状のファイルをAWSに実装し、下記でデモとして公開しています。
-▽デモサイト　URL
+現状のファイルをAWSに実装し、下記でデモとして公開しています。<br>
+▽デモサイト　URL<br>
 https://toward-future.net/CI/pages/shop_description/
 
 PHPのフレームワークCodeIgniterでHTMLテンプレートを使用し、Mysqlと連携をして動的な機能・管理機能の実装をしています。
