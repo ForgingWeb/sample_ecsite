@@ -89,10 +89,14 @@ justify-content: center;
 }
 .cl_row{
     margin-bottom:.5rem;
+<<<<<<< HEAD
     /*border-bottom:dotted 1px #cccccc;*/
 }
 .thumb{
     width:20%;
+=======
+    border-bottom:dotted 1px #cccccc;
+>>>>>>> 3af8be24bcb0c03588e48ddc917b620fd332df7d
 }
 @media screen and (max-width:900px){
     .shop_manage_login .my-3.my-md-5{

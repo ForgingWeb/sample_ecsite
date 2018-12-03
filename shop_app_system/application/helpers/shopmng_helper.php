@@ -75,7 +75,11 @@ EOM;
                 </td>
 
                 <td class="text-center">
+<<<<<<< HEAD
                 <img src="/CI_shop{$products_url}/thumb_{$val["photoname"]}" class="thumb" />
+=======
+                <img src="/CI_shop{$products_url}/thumb_{$val["photoname"]}" />
+>>>>>>> 3af8be24bcb0c03588e48ddc917b620fd332df7d
                 </td>
                 
                 <td class="text-center">
