@@ -1,4 +1,8 @@
 <?php
+/**
+ * @property Blog_model $blog_model
+ * @property Blog_model $shop_model
+ */
 class Shop extends CI_Controller {
     var $description;
     var $keywords;

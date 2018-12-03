@@ -230,79 +230,56 @@ return $html;
       $menu_ar[2]["id"] = "c_role1_id";
       $menu_ar[2]["name"] = "c_role1_name";
       */
-      $category_ar = array();
-      $r0_ar = array();
-      $r2_ar = array();
+      $category_ar = $this->shop_model->get_category_ar();
+
+      $r0_ar = $category_ar[0];
+      $r1_ar = $category_ar[1];
+      $r2_ar = $category_ar[2];
       $menu_ar = array();
-      
-      $table = "categories";
-      $this->db->order_by("parent_id", "asc");
-      $query = $this->db->get($table);
-      $i=0;
-      $r0 = 0;
-      $r2 = 0;
-      foreach ($query->result_array() as $row)
-			{
-				$id = $row['id'];
-				$category_name = $row['category_name'];
-        $role = $row['role'];
-        $parent_id = $row['parent_id'];
-
-        $category_ar[$i]["id"] = $id;
-        $category_ar[$i]["category_name"] = $category_name;
-        $category_ar[$i]["parent_id"] = $parent_id;
-        $category_ar[$i]["role"] = $role;
-
-        if($parent_id == null){
-          $r0_ar[$r0]["id"] = $id;
-          $r0_ar[$r0]["name"] = $category_name;
-          $r0++;
-        }
-        if($role == 2)
-          {
-            $r2_ar[$r2]["id"] = $r2_id =  $id;
-            $r2_ar[$r2]["name"] = $r2_name =  $category_name;
-            $r2_ar[$r2]["p_id"] =$r1_id = $parent_id;
-            $r2++;
-          }
-        $i++;
-      }
-      
+      //role0
       $r0 = 0;
       foreach ($r0_ar as $r0val)
       {
+        
         $menu_ar[$r0]["id"] = $r0val["id"];
         $menu_ar[$r0]["name"] = $r0val["name"];
 
-        for($t=0;$t<$i;$t++)
+        //role1
+        $r1 = 0;
+        foreach ($r1_ar as $r1val)
         {
-          $r1=0;
-          $role = $category_ar[$t]["role"];
-          if($role == 1)
+          $parent_id_1 = $r1val["parent_id"];
+
+
+          if($r0val["id"] == $parent_id_1)
           {
-            $r2=0;
-              if($r0val["id"] == $category_ar[$t]["parent_id"])
+          $menu_ar[$r0][$r1]["id"] =  $r1val["id"];
+          $menu_ar[$r0][$r1]["name"] = $r1val["name"];
+
+            //role2
+            $r2 = 0;
+            foreach ($r2_ar as $r2val)
+            {
+              
+              $parent_id_2 = $r2val["parent_id"];
+
+              if($r1val["id"] == $parent_id_2)
               {
-                $r1_id = $category_ar[$t]["id"];
-                $r1_name = $category_ar[$t]["category_name"];
-                $menu_ar[$r0][$r1]["id"] = $r1_id;
-                $menu_ar[$r0][$r1]["name"] = $category_ar[$t]["category_name"];
-                foreach($r2_ar as $key => $r2val)
-                {
-                  $p_id = $r2val["p_id"];
-                  if($p_id == $r1_id){
-                    $menu_ar[$r0][$r1][$r2]["id"] = $r2val["id"];
-                    $menu_ar[$r0][$r1][$r2]["name"] = $r2val["name"];
-                    $r2++;
-                  }
-                }
-                $r1++;
+              $menu_ar[$r0][$r1][$r2]["id"] = $r2val["id"];
+              $menu_ar[$r0][$r1][$r2]["name"] = $r2val["name"];
+              $r2++;
               }
+
+            }
+
+
+          $r1++;
           }
-        
         }
+        
         $r0++;
       }
+
       return $menu_ar;
 
     }

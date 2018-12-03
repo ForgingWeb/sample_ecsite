@@ -522,7 +522,11 @@ class Shop_manage extends CI_Controller {
         //ページネーションのための設定
         $config['base_url'] = '/CI_shop/shop_manage/smg_product_list/';
         $config['total_rows'] = $product_cnt;
+<<<<<<< HEAD
         $config['per_page'] = 5;
+=======
+        $config['per_page'] = 3;
+>>>>>>> 3af8be24bcb0c03588e48ddc917b620fd332df7d
 
         //$config['uri_segment'] = 3;
         //$config['num_links'] = 2;

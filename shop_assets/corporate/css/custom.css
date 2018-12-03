@@ -8,7 +8,7 @@
     background: #5350ee url(../../pages/img/icon-color.png) center no-repeat;
 }
 .header-navigation-content {
-    min-width: 8rem;
+    min-width: 37rem;
 }
 
 .owl-carousel .owl-nav.disabled, .owl-carousel .owl-dots.disabled {

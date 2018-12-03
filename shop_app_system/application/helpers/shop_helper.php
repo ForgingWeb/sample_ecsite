@@ -51,7 +51,7 @@ EOM;
         <link href="{$asset_dir}plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet">
         <link href="{$asset_dir}plugins/owl.carousel/assets/owl.carousel.css" rel="stylesheet">
         <link href="{$asset_dir}plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
-        <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css"><!-- for slider-range -->
+        <link href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css"><!-- for slider-range -->
         <link href="{$asset_dir}plugins/rateit/src/rateit.css" rel="stylesheet" type="text/css">
       
 EOM;
@@ -85,8 +85,8 @@ EOM;
                 $css = <<<EOM
                 
   <!-- Fonts START -->
-  <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Sans+Narrow|Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all" rel="stylesheet" type="text/css">
-  <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all" rel="stylesheet" type="text/css"><!--- fonts for slider on the index page -->  
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Sans+Narrow|Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all" rel="stylesheet" type="text/css"><!--- fonts for slider on the index page -->  
   <!-- Fonts END -->
 
   <!-- Global styles START -->          
@@ -264,7 +264,7 @@ EOM;
   <script src="{$asset_dir}plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script><!-- Quantity -->
   <script src="{$asset_dir}plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
   <script src="{$asset_dir}plugins/rateit/src/jquery.rateit.js" type="text/javascript"></script>
-  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js" type="text/javascript"></script><!-- for slider-range -->
+  <script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js" type="text/javascript"></script><!-- for slider-range -->
 
   <script src="{$asset_dir}corporate/scripts/layout.js" type="text/javascript"></script>
   <script type="text/javascript">
